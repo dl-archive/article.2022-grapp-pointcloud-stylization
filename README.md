@@ -30,11 +30,21 @@ DOI: [10.5220/0010849500003124](https://doi.org/10.5220/0010849500003124) · Aut
 
 The SciTePress template files (`article.cls`, `SCITEPRESS.sty`, `apalike.sty`, `apalike.bst`, `orcid.eps`) are bundled in `src/` and take precedence over the system versions.
 The camera-ready was built with MiKTeX (pdfTeX 1.40.23, i.e., the 2021 generation), hence the TeX Live 2021 container.
-The build reproduces `wagner2022-pointcloud-stylization-as-submitted.pdf` (identical text, word order, and page count; pixel-level differences on two pages are negligible).
+On `main`, the build produces the revised version (`v1.1-revised`). Check out `v1.0-camera-ready` to reproduce `wagner2022-pointcloud-stylization-as-submitted.pdf` (identical text, word order, and page count; pixel-level differences on two pages are negligible).
 
 ## Versions
 
 - [`v1.0-camera-ready`](https://github.com/dl-archive/article.2022-grapp-pointcloud-stylization/tree/v1.0-camera-ready) – sources as submitted to SciTePress (2021-11-29)
+- [`v1.1-revised`](https://github.com/dl-archive/article.2022-grapp-pointcloud-stylization/tree/v1.1-revised) – author's revised version (2026-11-08): grammar and reference fixes, see [Revisions](#revisions)
+
+## Revisions
+
+`v1.1-revised` (2026-11-08) corrects errors in the camera-ready version without changing its content or layout.
+Every page carries the note "Author's revised version (2026-11-08). Version of record: https://doi.org/10.5220/0010849500003124".
+
+- Grammar and word choice: "temporally coherent", "temporally incoherent", "art-directed hatching" (Figure 1), "procedurally controlled", "increase ease-of-use", "levels of detail", "implemented fundamentally differently; strokes are", "easily extended", "graphics hardware", "calligraphy", "only covers", "too little", "account for that", "This section presents", "as well as adjusting", "two-manifold", "we regard the mentioned drawbacks", "provides a basis", "approaches for geometry generation".
+- Figure 7: "The point clouds in (g) to (i) are real-world point clouds" (was "have are actual point clouds").
+- References: page ranges with broken dashes (Anjos et al., Markosian et al., Mérigot et al., Phong, Zakaria and Seidel, Zhang et al.) and "page" → "pages" (Barla et al.); author initials of Anjos et al. ("D. S.", "J. M."); "SIAM/ACM"; capitalization of NPR, 3D, Cyberpunk, Voronoi, X-Toon, and OverCoat in titles.
 
 ## Citation
 

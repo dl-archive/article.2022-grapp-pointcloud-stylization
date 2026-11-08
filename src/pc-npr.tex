@@ -42,6 +42,8 @@
 \newcommand{\vs}{vs.\xspace}
 
 
+\usepackage{eso-pic}
+\AddToShipoutPictureFG{\AtPageLowerLeft{\put(\LenToUnit{0.5\paperwidth},\LenToUnit{6mm}){\makebox[0pt][c]{\fontsize{6.5}{8}\selectfont\color{gray}Author's revised version (2026-11-08). Version of record: https://doi.org/10.5220/0010849500003124}}}}
 \begin{document}
 
 \title{A Non-Photorealistic Rendering Technique\\for Art-directed Hatching of 3D Point Clouds}
@@ -64,7 +66,7 @@
     We demonstrate how this data can be used directly to create novel artistic digital content using \acl{NPR} techniques.
     We introduce a \acs{GPU}-based technique for art-directable \acs{NPR} rendering of 3D point clouds at interactive frame-rates.
     The technique uses either a subset or all of the points to generate oriented, sketchy strokes by taking local curvature and normal information into account.
-    It uses X-Toon textures as part of its parameterization, supports hatching and cross hatching, and is inherently temporal coherent with respect to virtual camera movements.
+    It uses X-Toon textures as part of its parameterization, supports hatching and cross hatching, and is inherently temporally coherent with respect to virtual camera movements.
     This introduces significant artistic freedom that is underlined by our results, which show that a variety of different sketchy styles such as colored crayons, pencil, pointillism, wax crayons, blue print, and chalk-drawings can be achieved on a wide spectrum of point clouds, i.e., covering 3D polygonal meshes as well as iPad-based LiDAR scans.
     %
 }
@@ -102,7 +104,7 @@ With the introduction of \ac{LiDAR} sensors in high-end smartphones, \eg iPhone 
         \spy on ($(fig3.center)+(-9mm, +8mm)$) in node at ($(fig3.north)+(+7mm,-1mm)$);
     \end{tikzpicture}
     %
-    \caption{The \emph{Stanford dragon} as 3D point cloud, rendered in four different styles using art-direct hatching.}
+    \caption{The \emph{Stanford dragon} as 3D point cloud, rendered in four different styles using art-directed hatching.}
     \label{PCNPR:Fig:Teaser}
 \end{figure}
   
@@ -113,7 +115,7 @@ their usage as a fundamental geometric representation in \ac{NPR} as well as res
   (3) data visualization, as well as
   (4) art-directed particle animation and stylization such as the reprojection of recorded memories in the computer game Cyberpunk 2077~\cite{ankermann2021} as a means of distinguishing between reality and virtual reality.
 Another noteworthy use can be found in previsualization or digital content creation to evaluate ideas and concepts early before performing possibly costly data enhancement or transformation, \eg creating stylized, textured 3D meshes.
-We present a first approach into this domain by researching methods to enable art-directed procedural-controlled rendering effects.
+We present a first approach into this domain by researching methods to enable art-directed procedurally controlled rendering effects.
 
 In the context of \ac{NPR}, point clouds have both advantages and disadvantages over traditional 3D polygonal models.
 Point clouds lack inherent connectivity information that needs to be respected or maintained, which simplifies their representation, transformation, and rendering.
@@ -124,7 +126,7 @@ With these observations in mind, enabling the implementation of real-time, art-d
 \begin{description}
     %
     \item[Art-directable Parametrization ($C_1$):] 
-        Decoupling of processing operations that are required for different manifestations of stylization techniques, \eg point-splat functions \cite{Anjos2018}, to facilitate the interchange of respective techniques and increasing ease-of-use.
+        Decoupling of processing operations that are required for different manifestations of stylization techniques, \eg point-splat functions \cite{Anjos2018}, to facilitate the interchange of respective techniques and increase ease-of-use.
     %
     \item[Efficient Data Handling ($C_2$):] 
         An efficient representation of complex point clouds and respective stylization data to allow for art-directed stylization based on point-attribute data. This also concerns the reduction of data transfer and update latency to support real-time rendering for interactive control.
@@ -160,21 +162,21 @@ Prior art with respect to texture-based stylization in 3D object space using, \e
 In the following, we briefly classify an exemplary cross section of classics as well as latest works.
 
 \Ac{NPR} rendering of 3D polygonal meshes targeting a sketched look and feel can be easily achieved using texture-based hatching approaches~\cite{Praun2001,Webb2002}.
-Hatching patterns are pre-generated in multiple levels of details, \ie \emph{Tonal Art Maps}, and enable fine control over shading without aliasing.
+Hatching patterns are pre-generated in multiple levels of detail, \ie \emph{Tonal Art Maps}, and enable fine control over shading without aliasing.
 In order to also create sketchy outlines or silhouettes, image-based approaches can be applied~\cite{Nienhaus2003,Zakaria2004}.
-These types of techniques, however, cannot be applied to point clouds, since texturing and image-based post processing is implemented fundamentally different; Strokes are placed directly and individually, and require a dedicated level of detail concept.
-In addition, image-based curvature estimates~\cite{Kim2008} and purely image-based stippling~\cite{Awano2010} are not applicable and, regardless, usually lead to temporal incoherent results.
+These types of techniques, however, cannot be applied to point clouds, since texturing and image-based post processing is implemented fundamentally differently; strokes are placed directly and individually, and require a dedicated level of detail concept.
+In addition, image-based curvature estimates~\cite{Kim2008} and purely image-based stippling~\cite{Awano2010} are not applicable and, regardless, usually lead to temporally incoherent results.
 
 Another common approach for simulating, \eg pencil-like renderings, is to use edges of the 3D meshes to create overlapping graphite strokes~\cite{Sousa1999}.
 This concept of creating textured proxy geometry, also sometimes referred to as graphtals~\cite{Smith1984}, facilitates temporal frame-to-frame coherence and can be applied to particles and point clouds alike~\cite{Kaplan2000,Markosian2000}.
 The proxy geometry, \eg dots or strokes, can be specialized dynamically at run-time w.r.t. size, orientation, placement, and color.
 Thereby, artistic control can be linked to mesh properties and thus allow for silhouettes and contouring~\cite{Grabli2004}.
-This approach represents the core of our technique and, apart from various differences in the implementation details due to the evolution of graphic hardware, can be easily extend, enhanced, and specialized for point clouds.
+This approach represents the core of our technique and, apart from various differences in the implementation details due to the evolution of graphics hardware, can be easily extended, enhanced, and specialized for point clouds.
 
 A promising extension to this are \emph{ribbons}, \ie one-dimensional strips of points, ordered \enquote{according to their neighbourhood relations}~\cite{Runions2007}.
 The concept could be used to create silhouette or curvature aware proxy geometry~\cite{Schmid2011} such as strokes consisting of multiple links instead of single, straight ones, and might allow for fine-grained stippling styles. 
-So far, existing approaches covering water color, caligraphy, etc. still rely on strokes drawn by the artist~\cite{Zheng2017}.
-Automatic splatting of lines or strokes, though applicable to volumetric data as well, does only cover a specific style and is not easily art-directable~\cite{Zhang2014,Anjos2018}.
+So far, existing approaches covering water color, calligraphy, etc. still rely on strokes drawn by the artist~\cite{Zheng2017}.
+Automatic splatting of lines or strokes, though applicable to volumetric data as well, only covers a specific style and is not easily art-directable~\cite{Zhang2014,Anjos2018}.
 We partially combine these ideas and aim for an automated approach that allows for a constrained but artist-directable, expressive stylization.
 
 
@@ -438,7 +440,7 @@ Without any modifications however, the circles of the points at the front will c
 To avoid that problem, we add an offset to the polygons in the hatching pass, so the pencil strokes are slightly in front of their corresponding points from the depth pass~(\Cref{PCNPR:Fig:PolygonOffset} a).
 Since the depth test needs to be activated in the drawing pass for this approach to work, we need to make sure nothing is written to the depth buffer in the hatching pass, otherwise the lines will cover each other instead of overlapping and thereby creating darker tones~(\Cref{PCNPR:Fig:PolygonOffset} b).
 
-The size of the circles is also controllable via a parameter and needs to be adapted to achieve the desired result in the depth pass and to not cover too much or to little of the hatched lines.
+The size of the circles is also controllable via a parameter and needs to be adapted to achieve the desired result in the depth pass and to not cover too much or too little of the hatched lines.
 
 
 
@@ -469,7 +471,7 @@ This parameter also makes it possible to create results that exclusively use par
 So far, we replace each point with equally long, straight lines.
 Put together, they already create a good illustration of curved surfaces because the lines are short enough that they are a good approximation of the direction of the surface below them.
 On areas of high curvature on the other hand, the surface direction changes faster. That means a line that is as long as the lines on low-curvature areas is not a good surface approximation anymore.
-With curvature information at each point, we can align for that by decreasing the length of lines in high-curvature areas~(\Cref{PCNPR:Fig:Curvature}).
+With curvature information at each point, we can account for that by decreasing the length of lines in high-curvature areas~(\Cref{PCNPR:Fig:Curvature}).
 %
 In addition to line length modification through curvature, we also modify the line length with a randomness factor to account for the differences in line length when drawing by hand.
 
@@ -479,7 +481,7 @@ In addition to line length modification through curvature, we also modify the li
 \section{Results \& Discussion}
 \label{PCNPR:Sec:ApplicationsAndDiscussion}
 %
-This section present and discusses various application examples achieved by using our art-directable rendering technique.
+This section presents and discusses various application examples achieved by using our art-directable rendering technique.
 
 
 \paragraph{Application Examples.}
@@ -506,13 +508,13 @@ not conducive to the overall visual quality of the hatching effect, \ie the gene
 %
 Due to the nature of point clouds, especially when created using consumer LiDAR scanners, outliers from the depth pass (remember, all points are used for this pass) sometimes cover strokes and might not be desired.
 Similarly, the point cloud density is typically rather irregular, which sometimes leads to strokes bleeding from the background into the foreground.
-Both effects can be mitigated by tweaking the polygon offset as well as the adjusting the point size within the depth pass.
+Both effects can be mitigated by tweaking the polygon offset as well as adjusting the point size within the depth pass.
 Furthermore, these effects are not inherently wrong and are often also desirable for less dense point clouds.
 
 The same applies for strokes which leave an object's expected silhouette or contour (over-shooting of strokes).
 For us, this was mostly visually pleasing and also a welcome differentiator from image-based renderings.
 There might be cases where this is not desired or not fitting a specific style though.
-Since point clouds are never expected to be two manifold (\ie watertight or closed) and more often used for capturing open environments than for solid and closed objects, we render the mentioned drawbacks as non-problematic exceptions of our technique.
+Since point clouds are never expected to be two-manifold (\ie watertight or closed) and more often used for capturing open environments than for solid and closed objects, we regard the mentioned drawbacks as non-problematic exceptions of our technique.
 The distinctive styles can be easily achieved with only minor configurations within our art-directed parameterization and the technique can be implemented without exotic extension or groundbreaking graphics APIs.
 
 \begin{figure*}[p] % requires figures-spec.tex
@@ -584,7 +586,7 @@ The distinctive styles can be easily achieved with only minor configurations wit
     %
     \caption{%
         Various results of our NPR rendering-technique. A point cloud scan of the \emph{Stanford bunny} was used in (a) to (f).
-        The point clouds in (g) to (i) have are actual point clouds captured using an iPad.
+        The point clouds in (g) to (i) are real-world point clouds captured using an iPad.
         In (j) to (m) the points are sampled from 3D polygonal meshes and rendered using our NPR technique.
         All results are captured from our C++ implementation, rendered interactively and in real-time ($60\textrm{Hz}+$ in Full-HD and QHD) with a temporal coherence not possible using image-based approaches.
         Meshes used for (j) and (k) are licensed under \emph{CC Attribution} and have been created by \emph{noe-3d.at}~(\href{https://sketchfab.com/3d-models/grabfigur-cfec3a9d71db42978d4a377a0e8f1154}{sketchfab.com/3d-models/grabfigur-cfec3a9d71db42978d4a377a0e8f1154}) and \emph{Robin Butler}~(\href{https://sketchfab.com/3d-models/roman-temple-f5efe108fb19419ab985ef69d1762839}{sketchfab.com/3d-models/roman-temple-f5efe108fb19419ab985ef69d1762839}) respectively.}
@@ -600,9 +602,9 @@ The distinctive styles can be easily achieved with only minor configurations wit
 This paper presents a real-time non-photorealistic rendering technique for art-directed hatches of 3D point clouds.
 By extending the X-Toon approach of Barla \etal, it facilitates various configurations yielding different stylization results for potentially massive 3D point clouds that are obtained by \ac{LiDAR} acquisition or sampling polygonal 3D meshes. 
 %
-The current state provides basis to develop and apply more advanced stylization techniques for 3D point clouds.
+The current state provides a basis to develop and apply more advanced stylization techniques for 3D point clouds.
 For example, to synthesize more sophisticated stylized renderings, our technique can be extended to support outlines~\cite{Rosenthal2008} or even suggestive contours~\cite{ProencaJS2008} using the derived curvature information~\cite{Merigot2009,Lu2020}. 
-Further, level-of-detail approaches for geometry generation stage can be implemented enabling seamless 
+Further, level-of-detail approaches for geometry generation can be implemented enabling seamless 
 level-of-abstraction transitions~\cite{SD14}.
 Furthermore, the depth pass could be improved by using oriented point splats~\cite{Anjos2018}.
 
