@@ -4,7 +4,7 @@
 
 *Proceedings of the 17th International Joint Conference on Computer Vision, Imaging and Computer Graphics Theory and Applications (GRAPP '22)*, February 6–8, 2022, online. SciTePress, pp. 220–227.
 
-DOI: [10.5220/0010849500003124](https://doi.org/10.5220/0010849500003124) · Author's version: Zenodo *(pending)* · [ResearchGate](https://www.researchgate.net/publication/358523901)
+DOI: [10.5220/0010849500003124](https://doi.org/10.5220/0010849500003124) · Author's version: [Zenodo](https://doi.org/10.5281/zenodo.24059250) · [ResearchGate](https://www.researchgate.net/publication/358523901)
 
 > Point clouds or point-based geometry of varying density can nowadays be easily acquired using LiDAR cameras or modern smartphones with LiDAR sensors.
 > We demonstrate how this data can be used directly to create novel artistic digital content using Non-Photorealistic Rendering techniques.
